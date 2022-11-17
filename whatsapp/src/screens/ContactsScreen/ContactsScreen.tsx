@@ -1,8 +1,9 @@
 import {FlatList} from "react-native";
 import chats from "../../../assets/data/chats.json"
 import ContactListItem from "../../components/ContactListItem/ContactListItem";
+import React from "react";
 
-export default function ContactsScreen() {
+const ContactsScreen: React.FC = () => {
     return (
         <>
             <FlatList
@@ -13,3 +14,4 @@ export default function ContactsScreen() {
         </>
     )
 }
+export default ContactsScreen

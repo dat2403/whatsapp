@@ -1,7 +1,10 @@
 import {FlatList} from "react-native";
 import ChatListItem from "../../components/ChatListItem/ChatListItem";
 import chats from "../../../assets/data/chats.json"
-export default function ChatListScreen() {
+import React from "react";
+
+
+const ChatListScreen: React.FC = () => {
     return <FlatList
         style={{backgroundColor: "white"}}
         showsVerticalScrollIndicator={false}
@@ -9,6 +12,8 @@ export default function ChatListScreen() {
         renderItem={({item})=>
             <ChatListItem chat={item}/>}/>
 }
+
+export default ChatListScreen
 
 // const genChats = () => {
 //     let Data = []

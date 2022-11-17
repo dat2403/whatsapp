@@ -1,9 +1,9 @@
 import {StyleSheet, TextInput} from "react-native";
 import {AntDesign, MaterialIcons} from "@expo/vector-icons";
-import {useState} from "react";
+import React, {useState} from "react";
 import {SafeAreaView} from "react-native-safe-area-context";
 
-export default function InputBox() {
+const InputBox: React.FC = () => {
     const [newMessage, setNewMessage] = useState('');
     const onSend = () => {
         console.warn("Send a new message");
@@ -24,6 +24,8 @@ export default function InputBox() {
         </SafeAreaView>
     )
 }
+
+export default InputBox
 
 const styles = StyleSheet.create({
     container: {

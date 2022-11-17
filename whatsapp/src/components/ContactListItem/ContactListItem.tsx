@@ -2,10 +2,14 @@ import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
 
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
+import React from "react";
 
 dayjs.extend(relativeTime);
 
-const ContactListItem = ({user}) => {
+interface ContactListItemProps {
+    user: any
+}
+const ContactListItem: React.FC<ContactListItemProps> = ({user}) => {
 
     return (
         <Pressable onPress={() => {
@@ -39,6 +43,7 @@ const styles = StyleSheet.create({
         borderRadius: 30,
         marginRight: 10,
     },
+    content: {},
     name: {
         fontWeight: 'bold',
     },

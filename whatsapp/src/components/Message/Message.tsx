@@ -1,11 +1,13 @@
 import {StyleSheet, Text, View} from "react-native";
-import {useMemo} from "react";
+import React, {useMemo} from "react";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 
 dayjs.extend(relativeTime);
-
-export default function Message({message}) {
+interface MessageProps {
+    message: any
+}
+const Message: React.FC<MessageProps> = ({message}) => {
     const isMyMessage = useMemo(() => {
         return message.user.id === "u1"
     }, [message.user.id])
@@ -24,6 +26,7 @@ export default function Message({message}) {
         </View>
     )
 }
+export default Message;
 const styles = StyleSheet.create({
     container: {
         margin: 5,

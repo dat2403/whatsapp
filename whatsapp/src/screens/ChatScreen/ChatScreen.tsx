@@ -1,15 +1,18 @@
 import {FlatList, ImageBackground, KeyboardAvoidingView, Platform, StyleSheet} from "react-native";
-import bg from "../../../assets/images/BG.png"
 import messages from "../../../assets/data/messages.json"
 import Message from "../../components/Message/Message";
-import {useNavigation, useRoute} from "@react-navigation/native";
-import {useEffect} from "react";
+import {RouteProp, useNavigation, useRoute} from "@react-navigation/native";
+import React, {useEffect} from "react";
 import InputBox from "../../components/InputBox/InputBox";
 import {useSafeAreaInsets} from "react-native-safe-area-context";
+import {StackParamList} from "../../navigation/Navigation";
+import {bg} from "../../../assets/path";
 
-export default function ChatScreen() {
+type ScreenProps = RouteProp<StackParamList, "Chat">
+
+const ChatScreen: React.FunctionComponent = () => {
     const navigation = useNavigation()
-    const route = useRoute();
+    const route = useRoute<ScreenProps>();
     const inset = useSafeAreaInsets()
     useEffect(() => {
         navigation.setOptions({title: route.params.name})
@@ -33,6 +36,9 @@ export default function ChatScreen() {
         </KeyboardAvoidingView>
     )
 }
+
+export default ChatScreen;
+
 const styles = StyleSheet.create({
     bg: {
         flex: 1,

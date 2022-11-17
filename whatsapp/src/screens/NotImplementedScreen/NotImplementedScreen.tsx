@@ -1,6 +1,7 @@
 import { View, Text, Image, StyleSheet } from "react-native";
+import React from "react";
 
-const NotImplementedScreen = () => {
+const NotImplementedScreen: React.FC = () => {
     return (
         <View style={styles.container}>
             <Text style={styles.text}>Not Implemented!</Text>

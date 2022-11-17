@@ -1,12 +1,23 @@
 import {Image, Pressable, StyleSheet, Text, View} from "react-native";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
-import {useNavigation} from "@react-navigation/native";
+import {CompositeNavigationProp, useNavigation} from "@react-navigation/native";
+import React from "react";
+import {StackParamList} from "../../navigation/Navigation";
+import {TabParamList} from "../../navigation/MainTabNavigator";
+import {BottomTabNavigationProp} from "@react-navigation/bottom-tabs";
+import {NativeStackNavigationProp} from "@react-navigation/native-stack";
 
 dayjs.extend(relativeTime);
+interface ChatListItemProps {
+    chat: any
+}
 
-export default function ChatListItem({chat}) {
-    const navigation = useNavigation()
+type ItemNavigationProps = CompositeNavigationProp<
+  BottomTabNavigationProp<TabParamList, 'ChatList'>, NativeStackNavigationProp<StackParamList>>;
+
+const ChatListItem: React.FC<ChatListItemProps> = ({chat}) => {
+    const navigation = useNavigation<ItemNavigationProps>()
     return (
         <Pressable onPress={() => {
             navigation.navigate("Chat", {id: chat.id, name: chat.user.name})
@@ -32,6 +43,8 @@ export default function ChatListItem({chat}) {
         </Pressable>
     )
 }
+
+export default ChatListItem
 
 
 const styles = StyleSheet.create({

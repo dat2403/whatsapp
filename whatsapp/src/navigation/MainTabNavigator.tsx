@@ -2,10 +2,18 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import NotImplementedScreen from "../screens/NotImplementedScreen/NotImplementedScreen"
 import ChatListScreen from "../screens/ChatListScreen/ChatListScreen";
 import {Entypo, Ionicons} from "@expo/vector-icons";
+import React from "react";
 
-const Tab = createBottomTabNavigator();
+export type TabParamList = {
+  ChatList: undefined,
+  Status: undefined,
+  Calls: undefined,
+  Camera: undefined,
+  Settings: undefined,
+}
+const Tab = createBottomTabNavigator<TabParamList>();
 
-const MainTabNavigator = () => {
+const MainTabNavigator: React.FC = () => {
     return (
         <Tab.Navigator
             initialRouteName="ChatList"
