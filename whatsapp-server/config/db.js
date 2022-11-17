@@ -4,7 +4,7 @@ import 'dotenv/config'
 
 const dbUserName = process.env.DB_USERNAME
 const dbPwd = process.env.DB_PWD
-const dbURI = `mongodb+srv://${dbUserName}:${dbPwd}@cluster0.htpyu9l.mongodb.net/?retryWrites=true&w=majority`
+const dbURI = `mongodb+srv://${dbUserName}:${dbPwd}@cluster0.6ld7f8a.mongodb.net/?retryWrites=true&w=majority`
 
 export async function connectDb() {
     try {
