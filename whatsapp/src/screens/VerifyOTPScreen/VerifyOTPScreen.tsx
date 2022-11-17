@@ -1,17 +1,16 @@
 import * as React from "react";
-import { useEffect, useState } from "react";
-import { SafeAreaView, View } from "react-native";
+import {useEffect, useState} from "react";
+import {SafeAreaView, View} from "react-native";
 import AppStyles from "../../styles/AppStyles";
 import AppText from "../../components/AppText/AppText";
 import LinearButton from "../../components/LinearButton/LinearButton";
 import AppColors from "../../styles/AppColors";
 import styles from "./styles";
 import CustomTextInput from "../../components/CustomTextInput/CustomTextInput";
-import { useForm } from "react-hook-form";
-import { unit40 } from "../../utils/appUnit";
+import {useForm} from "react-hook-form";
+import {unit40} from "../../utils/appUnit";
 import {RouteProp, StackActions, useNavigation, useRoute} from "@react-navigation/native";
-import { verifyOTPResetPass } from "../../network/client";
-import { showToastError } from "../../utils/Toaster";
+import {verifyOTPResetPass} from "../../network/client";
 import apiHelper from "../../utils/ApiHelper";
 import useScreenState from "../../hooks/useScreenState";
 import AppLoading from "../../components/Loading/AppLoading";
@@ -22,10 +21,10 @@ type VerifyScreenProps = RouteProp<StackParamList, "VerifyOTP">
 type NavigateProp = NativeStackNavigationProp<StackParamList, "VerifyOTP">
 
 const VerifyOTPScreen: React.FunctionComponent = () => {
-  const { params } = useRoute<VerifyScreenProps>();
+  const {params} = useRoute<VerifyScreenProps>();
   const navigation = useNavigation<NavigateProp>()
   const [isDisabled, setIsDisabled] = useState<boolean>(true);
-  const { control, handleSubmit, watch } = useForm();
+  const {control, handleSubmit, watch} = useForm();
   const {isLoading, setLoading, mounted} = useScreenState()
   const verifyOTPHandler = async (data: any) => {
     const email = params.email;
@@ -35,7 +34,7 @@ const VerifyOTPScreen: React.FunctionComponent = () => {
       const res = await verifyOTPResetPass(email, otp);
       const resData = res.data;
       if (apiHelper.isSuccess(res)) {
-        if(mounted){
+        if (mounted) {
           navigation.dispatch(StackActions.replace("ResetPass", {
             email: resData?.data?.user?.email,
           }));
@@ -43,7 +42,7 @@ const VerifyOTPScreen: React.FunctionComponent = () => {
       }
     } catch (e) {
       console.log(e?.response?.data?.message);
-    }finally {
+    } finally {
       setLoading(false)
     }
   };
@@ -60,7 +59,7 @@ const VerifyOTPScreen: React.FunctionComponent = () => {
     return () => subscription.unsubscribe();
   }, [watch]);
 
-  if(isLoading){
+  if (isLoading) {
     return <AppLoading/>
   }
 
@@ -80,7 +79,7 @@ const VerifyOTPScreen: React.FunctionComponent = () => {
           name={"otp"}
           control={control}
           maxLength={4}
-          placeholder={"OTP Code"} />
+          placeholder={"OTP Code"}/>
         <LinearButton
           disabled={isDisabled}
           onPress={handleSubmit(verifyOTPHandler)}
@@ -91,7 +90,7 @@ const VerifyOTPScreen: React.FunctionComponent = () => {
           linearColors={isDisabled
             ? [AppColors.light_grey2, AppColors.light_grey2]
             : [AppColors.green_gradient_1, AppColors.green_gradient_2]}
-          buttonTitle={"Verify"} />
+          buttonTitle={"Verify"}/>
       </View>
     </SafeAreaView>
   );

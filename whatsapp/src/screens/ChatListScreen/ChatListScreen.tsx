@@ -5,12 +5,14 @@ import React from "react";
 
 
 const ChatListScreen: React.FC = () => {
-    return <FlatList
-        style={{backgroundColor: "white"}}
-        showsVerticalScrollIndicator={false}
-        data={chats}
-        renderItem={({item})=>
-            <ChatListItem chat={item}/>}/>
+  return (
+    <FlatList
+      style={{backgroundColor: "white"}}
+      showsVerticalScrollIndicator={false}
+      data={chats}
+      renderItem={({item}) =>
+        <ChatListItem chat={item}/>}/>
+  )
 }
 
 export default ChatListScreen

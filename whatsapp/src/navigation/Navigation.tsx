@@ -68,12 +68,14 @@ const Navigator: React.FC = () => {
               name="Chat"
               component={ChatScreen}
               options={{
+                headerShown: true,
                 headerStyle: {backgroundColor: "whitesmoke"},
               }}/>
             <Stack.Screen
               name="Contacts"
               component={ContactsScreen}
               options={{
+                headerShown: true,
                 headerStyle: {backgroundColor: "whitesmoke"},
               }}/>
           </>

@@ -3,6 +3,7 @@ import NotImplementedScreen from "../screens/NotImplementedScreen/NotImplemented
 import ChatListScreen from "../screens/ChatListScreen/ChatListScreen";
 import {Entypo, Ionicons} from "@expo/vector-icons";
 import React from "react";
+import SettingsScreen from "../screens/SettingsScreen/SettingsScreen";
 
 export type TabParamList = {
   ChatList: undefined,
@@ -64,7 +65,7 @@ const MainTabNavigator: React.FC = () => {
                 }}/>
             <Tab.Screen
                 name="Settings"
-                component={NotImplementedScreen}
+                component={SettingsScreen}
                 options={{
                     tabBarIcon: ({color, size}) => (
                         <Ionicons name="settings-outline" size={size} color={color}/>

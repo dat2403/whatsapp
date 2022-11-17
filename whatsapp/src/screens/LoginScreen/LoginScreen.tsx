@@ -28,8 +28,8 @@ const LoginScreen: React.FC = () => {
   const {isLoading, setLoading, mounted} = useScreenState()
   const {control, handleSubmit} = useForm({
     defaultValues: {
-      email: "dat.ht240300@gmail.com",
-      password: "Htd2403@"
+      email: "hoangtiendat.thidaihoc@gmail.com",
+      password: "hoangtiendat2403@"
     }
   });
 
@@ -44,7 +44,7 @@ const LoginScreen: React.FC = () => {
           signIn({
             user: res?.data?.data?.user
           })
-          navigation.dispatch(StackActions.replace("HomeScreen"))
+          navigation.dispatch(StackActions.replace("Main"))
         }
       }
     } catch (e) {
