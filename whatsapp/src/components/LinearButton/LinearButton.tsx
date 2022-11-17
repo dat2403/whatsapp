@@ -1,15 +1,14 @@
 import React from "react";
 import { Pressable, PressableProps, StyleProp, TextStyle } from "react-native";
-import LinearGradient from "react-native-linear-gradient";
 import AppColors from "../../styles/AppColors";
 import AppText, { AppFontType } from "../AppText/AppText";
 import PressView from "../PressView/PressView";
-import {unit100} from "../../utils/appUnit";
 import { fontSize18 } from "../../styles/AppFonts";
+import {LinearGradient} from "expo-linear-gradient";
 
 interface LinearButtonProps extends PressableProps {
   buttonTitle: string,
-  linearColors?: (string | number)[],
+  linearColors?: (string)[],
   fontType?: AppFontType,
   titleStyle?: StyleProp<TextStyle>,
   linearStyle?: StyleProp<TextStyle>

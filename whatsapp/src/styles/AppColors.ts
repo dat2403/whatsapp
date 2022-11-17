@@ -11,6 +11,7 @@ const AppColors = {
   green: '#03D691',
   red: '#FF3B5E',
   blue: '#1D91FF',
+  whitesmoke: "whitesmoke",
 
   //purple gradient
   purple_gradient_1: '#8465FF',

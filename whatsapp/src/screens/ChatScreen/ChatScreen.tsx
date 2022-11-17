@@ -17,6 +17,7 @@ const ChatScreen: React.FunctionComponent = () => {
     useEffect(() => {
         navigation.setOptions({title: route.params.name})
     }, [route.params])
+
     return (
         <KeyboardAvoidingView
             keyboardVerticalOffset={Platform.OS === "ios" ? inset.bottom + 90 : 90}

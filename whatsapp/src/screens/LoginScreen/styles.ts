@@ -1,17 +1,9 @@
 import { StyleSheet } from "react-native";
 import AppColors from "../../styles/AppColors";
 import { fontSize14, fontSize15, fontSize28, fontWeight700 } from "../../styles/AppFonts";
-import {unit15, unit16, unit25, unit34, unit35, unit36} from "../../utils/appUnit";
+import {unit10, unit15, unit16, unit20, unit25, unit30, unit34, unit35, unit36, unit50} from "../../utils/appUnit";
 
 const styles = StyleSheet.create({
-  logInSafeAreaContainer: {
-    flex: 1,
-    backgroundColor: AppColors.white,
-  },
-  logInContainer: {
-    flex: 1,
-    paddingHorizontal: unit35,
-  },
   logInLogo: {
     color: AppColors.black,
     fontSize: fontSize28,
@@ -28,12 +20,19 @@ const styles = StyleSheet.create({
     color: AppColors.white,
   },
   forgotPass: {
-    color: AppColors.dark_grey,
+    color: AppColors.green,
+    fontSize: fontSize14,
+    textAlign: "right",
+    marginTop: unit10,
+    fontStyle: "italic",
+  },
+  signUpInstead: {
+    color: AppColors.green,
     fontSize: fontSize14,
     textAlign: "center",
-
-    marginTop: unit36,
+    marginTop: unit50,
   },
+
 
 });
 

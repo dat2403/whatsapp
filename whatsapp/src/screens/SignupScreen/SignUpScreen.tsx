@@ -1,60 +1,52 @@
 import React from "react";
-import {SafeAreaView, View} from "react-native";
-import useAuth from "../../hooks/useAuth";
-import styles from "./styles";
+import { SafeAreaView, View } from "react-native";
+import AppStyles from "../../styles/AppStyles";
 import AppText from "../../components/AppText/AppText";
+import styles from "./styles";
+import { useForm } from "react-hook-form";
 import CustomTextInput from "../../components/CustomTextInput/CustomTextInput";
-import {useForm} from "react-hook-form";
+import { unit15, unit40 } from "../../utils/appUnit";
+import AppUtils from "../../utils/AppUtils";
 import LinearButton from "../../components/LinearButton/LinearButton";
 import AppColors from "../../styles/AppColors";
-import {unit15, unit40} from "../../utils/appUnit";
-import PressView from "../../components/PressView/PressView";
-import AppUtils from "../../utils/AppUtils";
+import { signUpAPI } from "../../network/client";
+import ApiHelper from "../../utils/ApiHelper";
+import { showToastError, showToastErrorMessage } from "../../utils/Toaster";
+import {StackActions, useNavigation} from "@react-navigation/native";
 import useScreenState from "../../hooks/useScreenState";
 import AppLoading from "../../components/Loading/AppLoading";
-import {logInAPI, setAccessToken} from "../../network/client";
-import ApiHelper from "../../utils/ApiHelper";
-import {StackActions, useNavigation} from "@react-navigation/native";
+import PressView from "../../components/PressView/PressView";
 import {NativeStackNavigationProp} from "@react-navigation/native-stack";
 import {StackParamList} from "../../navigation/Navigation";
-import AppStyles from "../../styles/AppStyles";
 
-type LoginProps = NativeStackNavigationProp<StackParamList, "Login">
+type SignupProps = NativeStackNavigationProp<StackParamList, "Signup">
 
-const LoginScreen: React.FC = () => {
-  const navigation = useNavigation<LoginProps>()
-  const {signIn, authData} = useAuth();
-  const user = authData.user;
+const SignupScreen: React.FC = () => {
+  const navigation = useNavigation<SignupProps>()
+  const { control, handleSubmit } = useForm();
   const {isLoading, setLoading, mounted} = useScreenState()
-  const {control, handleSubmit} = useForm({
-    defaultValues: {
-      email: "dat.ht240300@gmail.com",
-      password: "Htd2403@"
-    }
-  });
-
-  const logInHandler = async (data: any) => {
+  const signUpHandler = async (data: any) => {
     console.log(data);
+    setLoading(true)
     try {
-      setLoading(true)
-      const res = await logInAPI(data?.email, data?.password)
+      const res = await signUpAPI(data.fullName, data.email, data.password);
+      const resData = res.data;
       if (ApiHelper.isSuccess(res)) {
-        if (mounted) {
-          setAccessToken(res.data?.data?.token)
-          signIn({
-            user: res?.data?.data?.user
-          })
-          navigation.dispatch(StackActions.replace("HomeScreen"))
+        if(mounted){
+          console.log(resData);
+          navigation.dispatch(StackActions.replace("VerifyEmail", {
+            userId: resData?.data?.user?._id,
+          }));
         }
       }
     } catch (e) {
       console.log(e?.response?.data?.message);
-    } finally {
+    }finally {
       setLoading(false)
     }
   };
 
-  if (isLoading) {
+  if (isLoading){
     return <AppLoading isOverlay/>
   }
 
@@ -64,14 +56,25 @@ const LoginScreen: React.FC = () => {
       <View style={AppStyles.viewContainer}>
         <AppText
           fontType={"bold"}
-          style={styles.logInLogo}>Login</AppText>
+          style={styles.logo}>Sign up</AppText>
         <CustomTextInput
           inputContainerStyle={{
             marginTop: unit40,
           }}
+          name={"fullName"}
+          control={control}
+          rules={{
+            required: "Full name must be required",
+          }}
+          placeholder={"Full name"} />
+        <CustomTextInput
+          inputContainerStyle={{
+            marginTop: unit15,
+          }}
           name={"email"}
           control={control}
           autoCapitalize={"none"}
+          keyboardType={"email-address"}
           rules={{
             required: "E-mail address must be required",
             pattern: {
@@ -79,7 +82,7 @@ const LoginScreen: React.FC = () => {
               message: "E-mail address is invalid",
             },
           }}
-          placeholder={"E-mail address"}/>
+          placeholder={"E-mail address"} />
         <CustomTextInput
           inputContainerStyle={{
             marginTop: unit15,
@@ -95,31 +98,23 @@ const LoginScreen: React.FC = () => {
               message: "Password is invalid, 8-24 characters, at least 1 number and 1 special character",
             },
           }}
-          placeholder={"Password"}/>
+          placeholder={"Password"} />
         <LinearButton
-          onPress={handleSubmit(logInHandler)}
-          linearStyle={styles.logInButton}
-          titleStyle={styles.logInButtonText}
+          onPress={handleSubmit(signUpHandler)}
+          linearStyle={styles.button}
+          titleStyle={styles.buttonText}
           linearColors={[AppColors.green_gradient_1, AppColors.green_gradient_2]}
-          buttonTitle={"Login"}/>
-
-        <PressView onPress={() => {
-          navigation.navigate("ForgotPass")
+          buttonTitle={"Sign up"} />
+        <PressView onPress={() =>{
+          navigation.navigate("Login")
         }}>
           <AppText
-            style={styles.forgotPass}
-            fontType={"regular"}>Forgot Password</AppText>
-        </PressView>
-        <PressView onPress={() => {
-          navigation.navigate("Signup")
-        }}>
-          <AppText
-            style={styles.signUpInstead}
-            fontType={"regular"}>Do not have an account? Sign up</AppText>
+            style={styles.logInInstead}
+            fontType={"regular"}>Already have an account? Log in</AppText>
         </PressView>
       </View>
     </SafeAreaView>
   );
 };
 
-export default LoginScreen;
+export default SignupScreen;
