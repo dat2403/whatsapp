@@ -21,7 +21,7 @@ const ForgotPasswordScreen: React.FunctionComponent = () => {
   const navigation = useNavigation<ForgotPassProps>()
   const { control, handleSubmit } = useForm({
     defaultValues: {
-      email: "dat.ht240300@gmail.com",
+      email: "hoangtiendat.thidaihoc@gmail.com",
     },
   });
 
