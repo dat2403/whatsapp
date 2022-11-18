@@ -15,6 +15,7 @@ import apiHelper from "../../utils/ApiHelper";
 import {StackActions, useNavigation} from "@react-navigation/native";
 import {NativeStackNavigationProp} from "@react-navigation/native-stack";
 import {StackParamList} from "../../navigation/Navigation";
+import BackButton from "../../components/BackButton/BackButton";
 
 type ForgotPassProps = NativeStackNavigationProp<StackParamList, "ForgotPass">
 const ForgotPasswordScreen: React.FunctionComponent = () => {
@@ -31,7 +32,7 @@ const ForgotPasswordScreen: React.FunctionComponent = () => {
     try {
       const res = await forgotPassword(email);
       if (apiHelper.isSuccess(res)) {
-        navigation.dispatch(StackActions.replace("VerifyOTPScreen", {
+        navigation.dispatch(StackActions.replace("VerifyOTP", {
           email: email,
         }));
       }
@@ -43,6 +44,7 @@ const ForgotPasswordScreen: React.FunctionComponent = () => {
   return (
     <SafeAreaView style={AppStyles.container}>
       <View style={AppStyles.viewContainer}>
+        <BackButton/>
         <AppText
           style={styles.logo}
           fontType={"bold"}>Forgot Password</AppText>

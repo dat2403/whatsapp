@@ -40,7 +40,7 @@ function addOnUnAuthorizeListener(onUnAuthorize: () => void) {
 }
 
 function signUpAPI(fullName: string, email: string, password: string) {
-  return apiClient.post<BaseResponse<any>>("/signup", {
+  return apiClient.post<BaseResponse<any>>("/user/signup", {
     fullName,
     email,
     password,
@@ -48,33 +48,33 @@ function signUpAPI(fullName: string, email: string, password: string) {
 }
 
 function logInAPI(email: string, password: string) {
-  return apiClient.post<BaseResponse<any>>("/login", {
+  return apiClient.post<BaseResponse<any>>("/user/login", {
     email,
     password,
   });
 }
 
 function verifyEmailAPI(userId: string, otp: string) {
-  return apiClient.post("/verify-email", {
+  return apiClient.post("/user/verify-email", {
     userId,
     otp,
   });
 }
 
 function forgotPassword(email: string) {
-  return apiClient.post("/forgot-password", {
+  return apiClient.post("/user/forgot-password", {
     email,
   });
 }
 
 function verifyOTPResetPass(email: string, otp: string) {
-  return apiClient.post("/verify-otp-reset-pass", {
+  return apiClient.post("/user/verify-otp-reset-pass", {
     email, otp,
   });
 }
 
 function resetPassword(email: string, password: string) {
-  return apiClient.post("/reset-password", {
+  return apiClient.post("/user/reset-password", {
     email,
     password,
   });

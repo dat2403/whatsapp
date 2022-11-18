@@ -16,6 +16,7 @@ import useScreenState from "../../hooks/useScreenState";
 import AppLoading from "../../components/Loading/AppLoading";
 import {StackParamList} from "../../navigation/Navigation";
 import {NativeStackNavigationProp} from "@react-navigation/native-stack";
+import BackButton from "../../components/BackButton/BackButton";
 
 type VerifyScreenProps = RouteProp<StackParamList, "VerifyOTP">
 type NavigateProp = NativeStackNavigationProp<StackParamList, "VerifyOTP">
@@ -23,7 +24,6 @@ type NavigateProp = NativeStackNavigationProp<StackParamList, "VerifyOTP">
 const VerifyOTPScreen: React.FunctionComponent = () => {
   const {params} = useRoute<VerifyScreenProps>();
   const navigation = useNavigation<NavigateProp>()
-  const [isDisabled, setIsDisabled] = useState<boolean>(true);
   const {control, handleSubmit, watch} = useForm();
   const {isLoading, setLoading, mounted} = useScreenState()
   const verifyOTPHandler = async (data: any) => {
@@ -47,49 +47,37 @@ const VerifyOTPScreen: React.FunctionComponent = () => {
     }
   };
 
-  useEffect(() => {
-    const subscription = watch((value) => {
-      if (value.otp.length >= 4) {
-        setIsDisabled(false);
-      } else {
-        setIsDisabled(true);
-      }
-    });
-
-    return () => subscription.unsubscribe();
-  }, [watch]);
-
-  if (isLoading) {
-    return <AppLoading/>
-  }
-
   return (
     <SafeAreaView style={AppStyles.container}>
       <View style={AppStyles.viewContainer}>
+        <BackButton/>
         <AppText
           style={styles.logo}
           fontType={"bold"}>Verify OTP</AppText>
         <CustomTextInput
           inputContainerStyle={{
             marginTop: unit40,
+            justifyContent: "center",
+            alignItems: "center",
           }}
           inputStyle={{
             textAlign: "center",
           }}
+          keyboardType={"numeric"}
           name={"otp"}
           control={control}
           maxLength={4}
+          rules={{
+            required: 'OTP must be required'
+          }}
           placeholder={"OTP Code"}/>
         <LinearButton
-          disabled={isDisabled}
           onPress={handleSubmit(verifyOTPHandler)}
           linearStyle={[styles.button]}
           titleStyle={[styles.buttonText, {
-            color: isDisabled ? AppColors.grey : AppColors.white,
+            color: AppColors.white,
           }]}
-          linearColors={isDisabled
-            ? [AppColors.light_grey2, AppColors.light_grey2]
-            : [AppColors.green_gradient_1, AppColors.green_gradient_2]}
+          linearColors={[AppColors.green_gradient_1, AppColors.green_gradient_2]}
           buttonTitle={"Verify"}/>
       </View>
     </SafeAreaView>

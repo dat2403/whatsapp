@@ -1,28 +1,28 @@
 import React from "react";
-import { SafeAreaView, View } from "react-native";
+import {SafeAreaView, View} from "react-native";
 import AppStyles from "../../styles/AppStyles";
 import useAuth from "../../hooks/useAuth";
 import AppText from "../../components/AppText/AppText";
-import { useForm } from "react-hook-form";
+import {useForm} from "react-hook-form";
 import CustomTextInput from "../../components/CustomTextInput/CustomTextInput";
-import { unit15 } from "../../utils/appUnit";
+import {unit15} from "../../utils/appUnit";
 import AppUtils from "../../utils/AppUtils";
 import LinearButton from "../../components/LinearButton/LinearButton";
 import AppColors from "../../styles/AppColors";
 import styles from "./styles";
-import { RouteProp, useRoute } from "@react-navigation/native";
-import { resetPassword, setAccessToken } from "../../network/client";
+import {RouteProp, useRoute} from "@react-navigation/native";
+import {resetPassword, setAccessToken} from "../../network/client";
 import apiHelper from "../../utils/ApiHelper";
-import { showToastError } from "../../utils/Toaster";
 import useScreenState from "../../hooks/useScreenState";
 import AppLoading from "../../components/Loading/AppLoading";
 import {StackParamList} from "../../navigation/Navigation";
+import BackButton from "../../components/BackButton/BackButton";
 
 type ResetPassScreenProps = RouteProp<StackParamList, "ResetPass">
 const ResetPasswordScreen: React.FC = () => {
-  const { signIn } = useAuth();
+  const {signIn} = useAuth();
   const {params} = useRoute<ResetPassScreenProps>()
-  const { control, handleSubmit, watch} = useForm();
+  const {control, handleSubmit, watch} = useForm();
   const {isLoading, setLoading, mounted} = useScreenState()
   const pwd = watch('password')
 
@@ -34,22 +34,22 @@ const ResetPasswordScreen: React.FC = () => {
     try {
       const res = await resetPassword(email, newPassword)
       const resData = res.data
-      if (apiHelper.isSuccess(res)){
-        if (mounted){
-          setAccessToken(resData.data?.token)
+      if (apiHelper.isSuccess(res)) {
+        if (mounted) {
+          setAccessToken(resData?.data?.token)
           signIn({
             user: resData?.data?.user
           })
         }
       }
-    }catch (e) {
+    } catch (e) {
       console.log(e?.response?.data?.message);
-    }finally {
+    } finally {
       setLoading(false)
     }
   };
 
-  if (isLoading){
+  if (isLoading) {
     return <AppLoading/>
   }
 
@@ -57,6 +57,7 @@ const ResetPasswordScreen: React.FC = () => {
     <SafeAreaView
       style={AppStyles.container}>
       <View style={AppStyles.viewContainer}>
+        <BackButton/>
         <AppText
           fontType={"bold"}
           style={styles.logo}>Reset Password</AppText>
@@ -75,7 +76,7 @@ const ResetPasswordScreen: React.FC = () => {
               message: "Password is invalid, 8-24 characters, at least 1 number and 1 special character",
             },
           }}
-          placeholder={"Password"} />
+          placeholder={"Password"}/>
         <CustomTextInput
           inputContainerStyle={{
             marginTop: unit15,
@@ -94,13 +95,13 @@ const ResetPasswordScreen: React.FC = () => {
               return value === pwd || 'Password not match, please re-enter'
             }
           }}
-          placeholder={"Re-Password"} />
+          placeholder={"Re-Password"}/>
         <LinearButton
           onPress={handleSubmit(resetPassHandler)}
           linearStyle={styles.button}
           titleStyle={styles.buttonText}
-          linearColors={[AppColors.purple_gradient_1, AppColors.purple_gradient_2]}
-          buttonTitle={"Reset"} />
+          linearColors={[AppColors.green_gradient_1, AppColors.green_gradient_2]}
+          buttonTitle={"Reset"}/>
       </View>
     </SafeAreaView>
   );

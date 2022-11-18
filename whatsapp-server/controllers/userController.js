@@ -226,11 +226,24 @@ const resetPassword = async (req, res) => {
 
 }
 
+const allUsers = async (req, res) => {
+    const {search} = req.query
+    const keyword = search ? {
+        $or: [
+            { fullName : {$regex: search, $options: "i"}},
+            { email : {$regex: search, $options: "i"}}
+        ]
+    } : {}
+    const users = await UserModel.find(keyword).find({_id: {$ne: req.user._id}})
+    return apiHelper.sendSuccessResponse(res, 'Successfully get users', users)
+}
+
 export {
     signup,
     login,
     verifyEmail,
     forgotPassword,
     verifyOTPResetPass,
-    resetPassword
+    resetPassword,
+    allUsers
 }

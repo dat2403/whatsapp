@@ -2,6 +2,7 @@ import {apiHelper} from "../utils/apiHelper.js";
 import {isValidObjectId} from "mongoose";
 import UserModel from "../models/userModel.js";
 import ResetTokenModel from "../models/resetTokenModel.js";
+import jwt from "jsonwebtoken";
 
 export const isResetTokenValid = async (req, res, next) => {
     const {token, id} = req.query
@@ -26,4 +27,24 @@ export const isResetTokenValid = async (req, res, next) => {
     }
     req.user = user
     next()
+}
+
+
+export const protect = async (req, res, next) => {
+    const headers = req.headers
+    let token;
+    if(headers.authorization && headers.authorization.startsWith("Bearer")){
+        try {
+            token = headers.authorization.split(" ")[1]
+
+            const decodedToken = jwt.verify(token, process.env.JWT_SECRET_KEY);
+            req.user = await UserModel.findById(decodedToken.id).select("-password")
+            next()
+        }catch (e) {
+            return apiHelper.sendError(res, 'Not authorized, token failed')
+        }
+    }
+    if (!token) {
+        return apiHelper.sendError(res, 'Not authorized, no token')
+    }
 }

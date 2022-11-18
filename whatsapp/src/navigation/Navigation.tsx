@@ -94,11 +94,11 @@ const Navigator: React.FC = () => {
                 name="ForgotPass"
                 component={ForgotPasswordScreen}/>
               <Stack.Screen
-              name="VerifyOTP"
-              component={VerifyOTPScreen}/>
+                name="VerifyOTP"
+                component={VerifyOTPScreen}/>
               <Stack.Screen
-              name="ResetPass"
-              component={ResetPasswordScreen}/>
+                name="ResetPass"
+                component={ResetPasswordScreen}/>
             </>
 
           )}

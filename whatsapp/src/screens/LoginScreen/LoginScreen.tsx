@@ -29,7 +29,7 @@ const LoginScreen: React.FC = () => {
   const {control, handleSubmit} = useForm({
     defaultValues: {
       email: "hoangtiendat.thidaihoc@gmail.com",
-      password: "hoangtiendat2403@"
+      password: "Htd2403#"
     }
   });
 
